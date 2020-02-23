@@ -1,0 +1,7 @@
+simple shaped assets
+possibly one touch interaction
+single player, compete against yourself
+fast rounds, so it can be played on public transports
+not sound reliant so it can be played during class
+common game name so people search for it
+vertical layout for one handed usage

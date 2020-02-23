@@ -1,0 +1,128 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://GFX/Textures/square.png" type="Texture" id=2]
+[ext_resource path="res://GFX/Textures/SquareLightEdge.png" type="Texture" id=3]
+[ext_resource path="res://GFX/Textures/SquareLightCorner.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 256, 256 )
+
+[node name="Enemy" type="Area2D"]
+script = ExtResource( 1 )
+
+[node name="TestBackground" type="Sprite" parent="."]
+visible = false
+modulate = Color( 0.894118, 0.607843, 0, 1 )
+position = Vector2( -1.58667, 0 )
+scale = Vector2( 20, 20 )
+texture = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+light_mask = 0
+texture = ExtResource( 2 )
+
+[node name="PseudoLight" type="Node2D" parent="Sprite"]
+scale = Vector2( 1.4, 1.4 )
+
+[node name="PseudoLightEdge" type="Sprite" parent="Sprite/PseudoLight"]
+show_behind_parent = true
+position = Vector2( 0, -3.05176e-05 )
+texture = ExtResource( 3 )
+
+[node name="PseudoLightEdge2" type="Sprite" parent="Sprite/PseudoLight"]
+show_behind_parent = true
+position = Vector2( 0, -3.05176e-05 )
+rotation = 1.5708
+texture = ExtResource( 3 )
+
+[node name="PseudoLightEdge3" type="Sprite" parent="Sprite/PseudoLight"]
+show_behind_parent = true
+position = Vector2( 0, -3.05176e-05 )
+rotation = 3.14159
+texture = ExtResource( 3 )
+
+[node name="PseudoLightEdge4" type="Sprite" parent="Sprite/PseudoLight"]
+show_behind_parent = true
+position = Vector2( 0, -3.05176e-05 )
+rotation = -1.5708
+texture = ExtResource( 3 )
+
+[node name="PseudoLightCorner" type="Sprite" parent="Sprite/PseudoLight"]
+show_behind_parent = true
+position = Vector2( 0, -3.05176e-05 )
+texture = ExtResource( 4 )
+
+[node name="PseudoLightCorner2" type="Sprite" parent="Sprite/PseudoLight"]
+show_behind_parent = true
+position = Vector2( 0, -3.05176e-05 )
+rotation = 1.5708
+texture = ExtResource( 4 )
+
+[node name="PseudoLightCorner3" type="Sprite" parent="Sprite/PseudoLight"]
+show_behind_parent = true
+position = Vector2( 0, -3.05176e-05 )
+rotation = 3.14159
+texture = ExtResource( 4 )
+
+[node name="PseudoLightCorner4" type="Sprite" parent="Sprite/PseudoLight"]
+show_behind_parent = true
+position = Vector2( 0, -3.05176e-05 )
+rotation = -1.5708
+texture = ExtResource( 4 )
+
+[node name="Light" type="Node2D" parent="Sprite"]
+visible = false
+scale = Vector2( 1.4, 1.4 )
+
+[node name="Left" type="Light2D" parent="Sprite/Light"]
+texture = ExtResource( 3 )
+energy = 1.12
+
+[node name="Top" type="Light2D" parent="Sprite/Light"]
+rotation = 1.5708
+texture = ExtResource( 3 )
+energy = 1.12
+
+[node name="Right" type="Light2D" parent="Sprite/Light"]
+rotation = 3.14159
+texture = ExtResource( 3 )
+energy = 1.12
+
+[node name="Bot" type="Light2D" parent="Sprite/Light"]
+rotation = -1.5708
+texture = ExtResource( 3 )
+energy = 1.12
+
+[node name="TopLeft" type="Light2D" parent="Sprite/Light"]
+texture = ExtResource( 4 )
+energy = 1.12
+
+[node name="TopRight" type="Light2D" parent="Sprite/Light"]
+rotation = 1.5708
+texture = ExtResource( 4 )
+energy = 1.12
+
+[node name="BotRight" type="Light2D" parent="Sprite/Light"]
+rotation = 3.14159
+texture = ExtResource( 4 )
+energy = 1.12
+
+[node name="BotLeft" type="Light2D" parent="Sprite/Light"]
+rotation = -1.5708
+texture = ExtResource( 4 )
+energy = 1.12
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
+rect = Rect2( -250, -250, 500, 500 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 1 )
+
+[node name="SpawnTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
