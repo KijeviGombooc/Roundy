@@ -9,21 +9,31 @@ onready var spawnTimer = $SpawnTimer
 onready var decreaseTimer = $DecreaseTimer
 
 var spawnChanceArray = [
-1,1,1,1,1,
-2,2,2,2,2,
-3,3,3,3,
-4,4,4,4,
-5,5,5,
-6,6,5,
-7,7,
-8,8,
-9,
-10]
+ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+ 2, 2, 2, 2, 2, 2, 2, 2,
+ 3, 3, 3, 3, 3, 3,
+ 4, 4, 4, 4, 4, 4,
+ 5, 5, 5, 5,
+ 6, 6, 6, 6,
+ 7, 7, 7, 7, 7, 7,
+ 8, 8, 8, 8, 8, 8,
+ 9, 9, 9, 9, 9, 9, 9, 9,
+10,10,10,10,10,10,10,10,10,10]
+
+
+func disable():
+	spawnRate = 1
+	decreaseTimer.stop()
+
+
+func enable():
+	randomize()
+	spawnRate = 1
+	decreaseTimer.start(1)
 
 
 func _ready():
-	spawnTimer.start(spawnRate)
-	decreaseTimer.start(1)
+	enable()
 
 
 func _on_SpawnTimer_timeout():

@@ -6,7 +6,8 @@
 [ext_resource path="res://GFX/Textures/square.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=5]
 
-[node name="World" type="Node"]
+[node name="Game" type="Node"]
+script = ExtResource( 5 )
 
 [node name="Background" type="Sprite" parent="."]
 self_modulate = Color( 0, 0.360784, 0.501961, 1 )
@@ -20,12 +21,17 @@ scale = Vector2( 0.2, 0.2 )
 
 [node name="Spawner" parent="." instance=ExtResource( 2 )]
 
-[node name="HUD" parent="." instance=ExtResource( 3 )]
+[node name="HUD" parent="." groups=[
+"HUD",
+] instance=ExtResource( 3 )]
 
-[node name="Game" type="Node" parent="." groups=[
-"GAME",
-]]
-script = ExtResource( 5 )
-__meta__ = {
-"_editor_description_": ""
-}
+[node name="Start" parent="HUD/Control/Menu" index="0"]
+margin_top = 814.0
+
+[node name="Settings" parent="HUD/Control/Menu" index="1"]
+margin_bottom = 1074.0
+[connection signal="enemy_eaten" from="Player" to="." method="enemy_eaten"]
+[connection signal="player_eaten" from="Player" to="." method="player_eaten"]
+[connection signal="pressed" from="HUD/Control/Menu/Start" to="." method="start_game"]
+
+[editable path="HUD"]

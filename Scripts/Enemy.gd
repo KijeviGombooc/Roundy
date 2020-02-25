@@ -11,6 +11,7 @@ var started = false
 
 
 func _ready():
+	$CollisionShape2D.disabled = true
 	$Sprite.modulate = Color(randf()/2.0+0.5, randf()/2.0+0.5, randf()/2.0+0.5)
 	speed = randf()*(maxSpeed-minSpeed)+minSpeed
 
@@ -25,4 +26,5 @@ func _on_VisibilityNotifier2D_screen_exited():
 
 
 func _on_SpawnTimer_timeout():
+	$CollisionShape2D.disabled = false
 	started = true

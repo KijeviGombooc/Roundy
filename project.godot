@@ -18,10 +18,22 @@ _global_script_classes=[ {
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://Scripts/Enemy.gd"
+}, {
+"base": "Node",
+"class": "Game",
+"language": "GDScript",
+"path": "res://Scripts/Game.gd"
+}, {
+"base": "Area2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Scripts/Player.gd"
 } ]
 _global_script_class_icons={
 "Admob": "res://admob-lib/icon.png",
-"Enemy": ""
+"Enemy": "",
+"Game": "",
+"Player": ""
 }
 
 [android]
@@ -31,7 +43,7 @@ modules="org/godotengine/godot/GodotAdMob"
 [application]
 
 config/name="Roundy"
-run/main_scene="res://Scenes/World.tscn"
+run/main_scene="res://Scenes/Game.tscn"
 config/icon="res://GFX/Textures/icon.png"
 
 [display]

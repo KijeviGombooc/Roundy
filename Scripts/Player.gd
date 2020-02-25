@@ -1,11 +1,27 @@
+class_name Player
 extends Area2D
 
 export var speed = 2500
 
-var pressCount = 0
-var path = []
 onready var speed_squared = speed * speed
 onready var origScale = self.scale
+
+var pressCount = 0
+var path = []
+
+signal player_eaten
+signal enemy_eaten(value)
+
+
+func disable():
+	self.visible = false
+	$CollisionShape2D.set_deferred("disabled", true)
+
+
+func enable():
+	self.position = Vector2(540, 960)
+	self.visible = true
+	$CollisionShape2D.set_deferred("disabled", false)
 
 
 func _process(delta):
@@ -52,8 +68,8 @@ func _move_to_next(delta):
 func _eat(other : Enemy):
 	self.scale += other.scale/2
 	other.queue_free()
-	get_tree().call_group("GAME", "enemy_eaten", other.value)
+	emit_signal("enemy_eaten", other.value)
 
 
 func _eaten():
-	get_tree().call_group("GAME", "player_eaten")
+	emit_signal("player_eaten")
