@@ -1,5 +1,7 @@
 extends Node2D
 
+export var offset = Vector2()
+export var size = Vector2()
 export var spawnRate = 1.0
 export var rateDiffPerSec = 0.0001
 export var minSpawnRate = 0.1
@@ -57,30 +59,37 @@ func spawn_enemy():
 
 
 func _gen_pos_and_dir(scale):
-	var size = get_viewport_rect().size
-	var height = int(size.y)
 	var width = int(size.x)
+	var height = int(size.y)
+	var startX = int(offset.x)
+	var startY = int(offset.y)
 	
-	var pos = Vector2()
+	print(width)
+	print(height)
+	print(startX)
+	print(startY)
+	print("")
+	
+	var pos = Vector2(startX, startY)
 	var dir = Vector2()
 	var vert = randf() < 0.5
 	var posDir = randf() < 0.5
 	
 	if vert:
-		pos.x = randi() % width
+		pos.x += randi() % width
 		if posDir:
-			pos.y = 0 - scale*origWidth/2
+			pos.y += 0 - scale*origWidth/2
 			dir = Vector2(0,1)
 		else:
-			pos.y = height + scale*origWidth/2
+			pos.y += height + scale*origWidth/2
 			dir = Vector2(0,-1)
 	else:
-		pos.y = randi() % height
+		pos.y += randi() % height
 		if posDir:
-			pos.x = 0 - scale*origWidth/2
+			pos.x += 0 - scale*origWidth/2
 			dir = Vector2(1,0)
 		else:
-			pos.x = width + scale*origWidth/2
+			pos.x += width + scale*origWidth/2
 			dir = Vector2(-1,0)
 	
 	return {pos=pos, dir=dir}
