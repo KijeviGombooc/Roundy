@@ -4,12 +4,10 @@ extends Node
 const filePath = "user://fast_game.sav"
 var score = 0.0
 var highscore = 0.0
+signal died
 
 
 func _ready():
-	$Admob.load_banner()
-	$Admob.load_interstitial()
-	hide_banner()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 	load_game()
 	end_game()
@@ -74,54 +72,46 @@ func end_game():
 	$Spawner.disable()
 	$HUD/Control/Menu/Start.visible = true
 	$HUD/Control/Menu/Settings.visible = true
-	if showInterstitial:
-		$Admob.show_interstitial()
-
+	emit_signal("died")
 
 
 func show_banner(topSide):
-	$Admob.hide_banner()
-	$Admob.banner_on_top = topSide
-	$Admob.load_banner()
-	$Admob.show_banner()
-	var bannerSize = $Admob.get_banner_dimension()
 	if topSide:
-		var offset = Vector2(0, bannerSize.y)
-		$HUD/Control.margin_top = offset.y
-		$Spawner.offset = offset
-		$Spawner.size = Vector2(1080, 1920)-offset
+		if not $HUD.show_banner_top(): return
 	else:
-		var offset = Vector2(0, 0)
-		$HUD/Control.margin_top = 0
-		$HUD/Control.margin_bottom = bannerSize.y
-		$Spawner.offset = offset
-		$Spawner.size = Vector2(1080, 1920-bannerSize.y)
-
-
-func hide_banner():
-	$Admob.hide_banner()
-	$HUD/Control.margin_top = 0
-	$Spawner.offset = Vector2()
-	$Spawner.size = Vector2(1080, 1920)
-
-
-var showInterstitial = false
-var settingsIterator = 0
-var settingsArray = ["NO_AD", "TOP_BANNER", "BOT_BANNER", "INTERSTITIAL"]
-
-func _on_Settings_pressed():
-	settingsIterator = (settingsIterator+1)%settingsArray.size()
+		if not $HUD.show_banner_bottom(): return
 	
-	match settingsIterator:
+	var sizeAndPos = $HUD.get_ad_size_and_pos()
+	$Spawner.offset = sizeAndPos.pos
+	$Spawner.size = Vector2(1080, 1920 - sizeAndPos.size.y)
+
+
+func load_interstitial():
+	$HUD.load_interstitial()
+	self.connect("died", $HUD, "show_interstitial")
+	var sizeAndPos = $HUD.get_ad_size_and_pos()
+	$Spawner.offset = sizeAndPos.pos
+	$Spawner.size = Vector2(1080, 1920 - sizeAndPos.size.y)
+
+
+func hide_ads():
+	$HUD.hide_ads()
+	var sizeAndPos = $HUD.get_ad_size_and_pos()
+	$Spawner.offset = sizeAndPos.pos
+	$Spawner.size = Vector2(1080, 1920 - sizeAndPos.size.y)
+
+
+var iterator = 0
+func _on_Settings_pressed():
+	iterator = (iterator+1)%4
+	if self.is_connected("died", $HUD, "show_interstitial"):
+		self.disconnect("died", $HUD, "show_interstitial")
+	match iterator:
 		0:
-			hide_banner()
-			showInterstitial = false
+			hide_ads()
 		1:
 			show_banner(true)
-			showInterstitial = false
 		2:
 			show_banner(false)
-			showInterstitial = false
 		3:
-			hide_banner()
-			showInterstitial = true
+			load_interstitial()

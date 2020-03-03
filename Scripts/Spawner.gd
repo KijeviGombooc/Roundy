@@ -1,7 +1,7 @@
 extends Node2D
 
 export var offset = Vector2()
-export var size = Vector2()
+export var size = Vector2(1080, 1920)
 export var spawnRate = 1.0
 export var rateDiffPerSec = 0.0001
 export var minSpawnRate = 0.1
@@ -63,12 +63,6 @@ func _gen_pos_and_dir(scale):
 	var height = int(size.y)
 	var startX = int(offset.x)
 	var startY = int(offset.y)
-	
-	print(width)
-	print(height)
-	print(startX)
-	print(startY)
-	print("")
 	
 	var pos = Vector2(startX, startY)
 	var dir = Vector2()
