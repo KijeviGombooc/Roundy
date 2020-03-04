@@ -44,7 +44,7 @@ modules="org/godotengine/godot/GodotAdMob"
 
 config/name="Roundy"
 run/main_scene="res://Scenes/Game.tscn"
-config/icon="res://GFX/Textures/icon.png"
+config/icon="res://GFX/Textures/circle.png"
 
 [display]
 
